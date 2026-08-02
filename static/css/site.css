@@ -5,7 +5,7 @@
   --border: #dce6ef;
   --paper: #ffffff;
   --soft: #f5f9fd;
-  --hero: #fff4ea;
+  --hero: #fff9f4;
   --link: #3a789f;
 }
 
@@ -23,7 +23,7 @@ body {
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .container { width: min(1040px, calc(100% - 2rem)); margin: 0 auto; }
-.hero { padding: 4rem 0 3rem; background: var(--hero); border-bottom: 1px solid #f1dcc6; text-align: center; }
+.hero { padding: 4rem 0 3rem; background: var(--hero); border-bottom: 1px solid #f5e8dc; text-align: center; }
 .venue { margin: 0 0 0.4rem; color: var(--muted); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.08em; }
 h1, h2, h3 { color: var(--heading); line-height: 1.25; }
 h1 { max-width: 900px; margin: 0 auto 1.1rem; font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 500; }
