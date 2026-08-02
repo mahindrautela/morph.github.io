@@ -36,7 +36,7 @@ p { margin: 0 0 1rem; }
 .section { padding: 4rem 0; }
 .muted-section { background: var(--soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .lead { font-size: 1.12rem; }
-.architecture-figure { margin: 1.75rem 0 0; }
+.architecture-figure { max-width: 720px; margin: 1.75rem auto 0; }
 .architecture-figure img { display: block; width: 100%; height: auto; }
 .capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
 .capability-grid article { padding: 1.3rem; background: #fff; border: 1px solid var(--border); }
