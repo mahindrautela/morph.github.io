@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MORPH is a modality-agnostic foundation model for PDEs that operates across heterogeneous 1D, 2D, and 3D spatiotemporal data.">
+  <meta name="keywords" content="MORPH, PDE foundation model, scientific machine learning, neural operator, physics AI, LANL">
+  <meta name="author" content="Mahindra Singh Rautela et al.">
+  <meta property="og:title" content="MORPH: PDE Foundation Models with Arbitrary Data Modality">
+  <meta property="og:description" content="A shape-agnostic PDE foundation model for heterogeneous 1D–3D spatiotemporal physics.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="static/images/morph-architecture.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#08111f">
+  <title>MORPH | PDE Foundation Models with Arbitrary Data Modality</title>
+  <link rel="icon" href="static/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="static/css/site.css">
+  <script defer src="static/js/site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="MORPH home">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>MORPH</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="sr-only">Open menu</span>
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#results">Results</a>
+        <a href="#models">Models</a>
+        <a href="#resources">Resources</a>
+        <a class="nav-cta" href="https://arxiv.org/abs/2509.21670" target="_blank" rel="noreferrer">Read paper</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="hero-grid shell">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span></span> Modality-agnostic scientific foundation model</div>
+          <h1><span class="gradient-text">MORPH</span><br>PDE Foundation Models with Arbitrary Data Modality</h1>
+          <p class="hero-lede">
+            One convolutional vision-transformer backbone for heterogeneous spatiotemporal physics—across
+            <strong>1D, 2D, and 3D</strong> domains, different resolutions, and mixed scalar and vector fields.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://arxiv.org/pdf/2509.21670" target="_blank" rel="noreferrer">
+              <span aria-hidden="true">↗</span> Paper
+            </a>
+            <a class="button secondary" href="https://github.com/lanl/MORPH" target="_blank" rel="noreferrer">
+              <span aria-hidden="true">⌘</span> Code
+            </a>
+            <a class="button ghost" href="#citation">BibTeX</a>
+          </div>
+          <p class="authors">
+            Mahindra Singh Rautela · Alexander Most · Siddharth Mansingh · Bradley C. Love · Alexander Scheinker ·
+            Diane Oyen · Nathan Debardeleben · Earl Lawrence · Ayan Biswas
+          </p>
+          <p class="affiliation">Los Alamos National Laboratory</p>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Abstract visualization of heterogeneous PDE modalities">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="modality-card modality-1d">
+            <span class="modality-label">1D</span>
+            <svg viewBox="0 0 260 100" role="img" aria-label="One-dimensional waveform">
+              <path d="M0 58 C18 12 37 12 55 58 S92 104 110 58 S147 12 165 58 S202 104 220 58 S247 24 260 50" />
+            </svg>
+          </div>
+          <div class="modality-card modality-2d">
+            <span class="modality-label">2D</span>
+            <div class="heatmap" aria-hidden="true"></div>
+          </div>
+          <div class="modality-card modality-3d">
+            <span class="modality-label">3D</span>
+            <div class="cube" aria-hidden="true">
+              <span class="cube-face front"></span>
+              <span class="cube-face back"></span>
+              <span class="cube-edge e1"></span><span class="cube-edge e2"></span>
+              <span class="cube-edge e3"></span><span class="cube-edge e4"></span>
+            </div>
+          </div>
+          <div class="morph-core">
+            <span class="core-small">Unified backbone</span>
+            <strong>MORPH</strong>
+            <span class="core-pulse"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats shell reveal" aria-label="MORPH key facts">
+        <div class="stat"><strong>1D–3D</strong><span>native data modalities</span></div>
+        <div class="stat"><strong>6 + 7</strong><span>pretraining + transfer datasets</span></div>
+        <div class="stat"><strong>7M–480M</strong><span>released model scales</span></div>
+        <div class="stat"><strong>AR(1)</strong><span>initial-value evolution</span></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="overview">
+      <div class="section-heading reveal">
+        <span class="section-kicker">Why MORPH</span>
+        <h2>Physics data do not come in one shape.</h2>
+        <p>
+          Scientific observations and simulations vary in dimensionality, grid resolution, field composition, and temporal context.
+          MORPH treats this heterogeneity as a first-class modeling requirement rather than forcing every problem into a fixed 2D layout.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card reveal">
+          <div class="feature-number">01</div>
+          <h3>Modality-agnostic</h3>
+          <p>A single architecture processes 1D signals, 2D fields, and 3D volumes without task-specific redesign.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-number">02</div>
+          <h3>Physics-aware fields</h3>
+          <p>Component-wise convolution and field-wise cross-attention preserve interactions among scalar and vector quantities.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-number">03</div>
+          <h3>Efficient space-time context</h3>
+          <p>Axial attention factorizes full spatiotemporal attention along time, depth, height, and width.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-number">04</div>
+          <h3>Transfer with less data</h3>
+          <p>Pretraining improves downstream prediction under both full fine-tuning and parameter-efficient LoRA adaptation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="architecture">
+      <div class="shell">
+        <div class="section-heading light reveal">
+          <span class="section-kicker">Architecture</span>
+          <h2>A unified path from heterogeneous physics to future states.</h2>
+          <p>MORPH combines local feature extraction, inter-field communication, and factorized spatiotemporal reasoning.</p>
+        </div>
+
+        <figure class="paper-figure architecture-figure reveal">
+          <button class="figure-open" type="button" data-image="static/images/morph-architecture.png" aria-label="Open architecture figure at full size">
+            <img src="static/images/morph-architecture.png" alt="MORPH architecture showing component-wise convolution, field-wise cross-attention, axial attention, and decoding" loading="lazy">
+          </button>
+          <figcaption>MORPH architecture. Click the figure to enlarge.</figcaption>
+        </figure>
+
+        <div class="pipeline reveal" aria-label="MORPH architecture stages">
+          <div class="pipeline-step">
+            <span>01</span>
+            <h3>Component-wise convolution</h3>
+            <p>Captures local structure across scalar and vector components.</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-step">
+            <span>02</span>
+            <h3>Inter-field cross-attention</h3>
+            <p>Selectively fuses information across physical fields.</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-step">
+            <span>03</span>
+            <h3>4D axial attention</h3>
+            <p>Reasons separately along T, D, H, and W axes.</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-step">
+            <span>04</span>
+            <h3>Autoregressive decoding</h3>
+            <p>Maps the fused representation to the next physical state.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="uptf">
+      <div class="split-layout">
+        <div class="section-heading reveal">
+          <span class="section-kicker">UPTF-7</span>
+          <h2>One tensor language for many PDE datasets.</h2>
+          <p>
+            MORPH converts each mini-batch on the fly to the Unified Physics Tensor Format. The representation preserves the
+            meaning of time, fields, components, and spatial axes while avoiding expensive dataset-wide padding.
+          </p>
+        </div>
+        <div class="tensor-card reveal" aria-label="Unified Physics Tensor Format dimensions">
+          <div class="tensor-title">X ∈ ℝ<sup>B×T×F×C×D×H×W</sup></div>
+          <div class="tensor-grid">
+            <div><strong>B</strong><span>Batch</span></div>
+            <div><strong>T</strong><span>Time</span></div>
+            <div><strong>F</strong><span>Fields</span></div>
+            <div><strong>C</strong><span>Components</span></div>
+            <div><strong>D</strong><span>Depth</span></div>
+            <div><strong>H</strong><span>Height</span></div>
+            <div><strong>W</strong><span>Width</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section results-section" id="results">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Results</span>
+          <h2>Transfer across modalities, scales, and data regimes.</h2>
+          <p>
+            Experiments evaluate zero-shot transfer, full fine-tuning, LoRA adaptation, dataset-size scaling, and autoregressive rollouts.
+          </p>
+        </div>
+
+        <article class="result-story reveal">
+          <div class="result-copy">
+            <span class="result-index">01 / Cross-modality transfer</span>
+            <h3>Representations learned in 2D transfer to 1D and 3D physics.</h3>
+            <p>
+              A model pretrained only on 2D incompressible Navier–Stokes shows positive zero-shot gap closure across six fluid targets,
+              including 1D compressible flow, 3D CFD, magnetohydrodynamics, and turbulent self-gravitating flow.
+            </p>
+            <div class="result-callout"><strong>GCR &gt; 0</strong><span>on every evaluated target</span></div>
+          </div>
+          <figure class="paper-figure compact">
+            <button class="figure-open" type="button" data-image="static/images/zero-shot-transfer.png" aria-label="Open zero-shot transfer figure">
+              <img src="static/images/zero-shot-transfer.png" alt="Bar chart of zero-shot cross-modality transfer from CFD2D-IC pretraining" loading="lazy">
+            </button>
+            <figcaption>Zero-shot transfer from CFD2D-IC pretraining.</figcaption>
+          </figure>
+        </article>
+
+        <article class="result-story reverse reveal">
+          <div class="result-copy">
+            <span class="result-index">02 / Data efficiency</span>
+            <h3>Pretraining reduces the amount of task-specific data needed.</h3>
+            <p>
+              On 1D diffusion–reaction, pretrained MORPH surpasses a standalone model using 25% of trajectories. On FNS-KF,
+              MORPH-S exceeds the full-data standalone reference with roughly 256 fine-tuning trajectories.
+            </p>
+            <div class="result-callout"><strong>&lt;1%</strong><span>of FNS-KF trajectories can beat the standalone reference</span></div>
+          </div>
+          <div class="figure-pair">
+            <figure class="paper-figure compact">
+              <button class="figure-open" type="button" data-image="static/images/scaling-dr1d.png" aria-label="Open DR1D scaling figure">
+                <img src="static/images/scaling-dr1d.png" alt="RMSE versus percentage of trajectories for DR1D fine-tuning" loading="lazy">
+              </button>
+              <figcaption>1D diffusion–reaction.</figcaption>
+            </figure>
+            <figure class="paper-figure compact">
+              <button class="figure-open" type="button" data-image="static/images/scaling-fnskf.png" aria-label="Open FNS-KF scaling figure">
+                <img src="static/images/scaling-fnskf.png" alt="RMSE versus number of trajectories for FNS-KF fine-tuning" loading="lazy">
+              </button>
+              <figcaption>2D forced Navier–Stokes.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="result-story rollout-story reveal">
+          <div class="result-copy">
+            <span class="result-index">03 / Autoregressive prediction</span>
+            <h3>Stable multi-step evolution from an initial state.</h3>
+            <p>
+              MORPH advances physical states autoregressively and produces stable ten-step forecasts on representative shallow-water
+              and forced Navier–Stokes systems.
+            </p>
+          </div>
+          <figure class="paper-figure wide">
+            <button class="figure-open" type="button" data-image="static/images/fnskf-rollout-vx.png" aria-label="Open autoregressive rollout figure">
+              <img src="static/images/fnskf-rollout-vx.png" alt="True, predicted, and error fields across a ten-step FNS-KF autoregressive rollout" loading="lazy">
+            </button>
+            <figcaption>Representative ten-step FNS-KF rollout: ground truth, prediction, and error.</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="models">
+      <div class="shell">
+        <div class="section-heading light reveal">
+          <span class="section-kicker">Model family</span>
+          <h2>Scale from 7 million to 480 million parameters.</h2>
+          <p>Four variants share the same core architecture and increase attention width, heads, depth, and MLP capacity.</p>
+        </div>
+
+        <div class="model-grid reveal">
+          <article class="model-card">
+            <span class="model-tier">Tiny</span><h3>MORPH-Ti</h3><strong>7M</strong>
+            <dl><div><dt>Embedding</dt><dd>256</dd></div><div><dt>Heads</dt><dd>4</dd></div><div><dt>Depth</dt><dd>4</dd></div></dl>
+          </article>
+          <article class="model-card featured">
+            <span class="model-tier">Small</span><h3>MORPH-S</h3><strong>30M</strong>
+            <dl><div><dt>Embedding</dt><dd>512</dd></div><div><dt>Heads</dt><dd>8</dd></div><div><dt>Depth</dt><dd>4</dd></div></dl>
+          </article>
+          <article class="model-card">
+            <span class="model-tier">Medium</span><h3>MORPH-M</h3><strong>126M</strong>
+            <dl><div><dt>Embedding</dt><dd>768</dd></div><div><dt>Heads</dt><dd>12</dd></div><div><dt>Depth</dt><dd>8</dd></div></dl>
+          </article>
+          <article class="model-card">
+            <span class="model-tier">Large</span><h3>MORPH-L</h3><strong>480M</strong>
+            <dl><div><dt>Embedding</dt><dd>1024</dd></div><div><dt>Heads</dt><dd>16</dd></div><div><dt>Depth</dt><dd>16</dd></div></dl>
+          </article>
+        </div>
+
+        <div class="lora-banner reveal">
+          <div>
+            <span class="section-kicker">Parameter-efficient adaptation</span>
+            <h3>LoRA recovers most fine-tuning gains with far fewer trainable parameters.</h3>
+          </div>
+          <div class="lora-symbol" aria-hidden="true">ΔW = BA</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="datasets">
+      <div class="section-heading reveal">
+        <span class="section-kicker">Data universe</span>
+        <h2>Pretrained and evaluated across heterogeneous physics.</h2>
+      </div>
+      <div class="dataset-columns">
+        <div class="dataset-panel reveal">
+          <div class="dataset-heading"><span>Pretraining</span><strong>6 datasets</strong></div>
+          <div class="dataset-list">
+            <div><b>MHD-3D</b><span>Magnetohydrodynamics · 3D</span></div>
+            <div><b>DR-2D</b><span>Diffusion–reaction · 2D</span></div>
+            <div><b>CFD-1D</b><span>Compressible flow · 1D</span></div>
+            <div><b>CFD2D-IC</b><span>Incompressible flow · 2D</span></div>
+            <div><b>CFD-3D</b><span>Compressible flow · 3D</span></div>
+            <div><b>SW-2D</b><span>Shallow water · 2D</span></div>
+          </div>
+        </div>
+        <div class="dataset-panel reveal">
+          <div class="dataset-heading"><span>Fine-tuning</span><strong>7 datasets</strong></div>
+          <div class="dataset-list">
+            <div><b>DR-1D</b><span>Diffusion–reaction · 1D</span></div>
+            <div><b>CFD-2D</b><span>Compressible flow · 2D</span></div>
+            <div><b>CFD3D-TURB</b><span>Turbulent flow · 3D</span></div>
+            <div><b>BE-1D</b><span>Burgers equation · 1D</span></div>
+            <div><b>GSDR-2D</b><span>Gray–Scott · 2D</span></div>
+            <div><b>TGC-3D</b><span>Turbulent cooling gravity · 3D</span></div>
+            <div><b>FNS-KF-2D</b><span>Forced Navier–Stokes · 2D</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section resources-section" id="resources">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Resources</span>
+          <h2>Read, reproduce, and build on MORPH.</h2>
+        </div>
+        <div class="resource-grid reveal">
+          <a class="resource-card" href="https://arxiv.org/abs/2509.21670" target="_blank" rel="noreferrer">
+            <span class="resource-icon">P</span><div><h3>Paper</h3><p>arXiv:2509.21670</p></div><span class="resource-arrow">↗</span>
+          </a>
+          <a class="resource-card" href="https://github.com/lanl/MORPH" target="_blank" rel="noreferrer">
+            <span class="resource-icon">G</span><div><h3>Code</h3><p>Official LANL repository</p></div><span class="resource-arrow">↗</span>
+          </a>
+          <a class="resource-card" href="https://github.com/lanl/MORPH/tree/main/docs" target="_blank" rel="noreferrer">
+            <span class="resource-icon">D</span><div><h3>Documentation</h3><p>Setup and user guide</p></div><span class="resource-arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="quickstart reveal">
+          <div class="quickstart-copy">
+            <span class="section-kicker">Quick start</span>
+            <h3>Explore the public implementation.</h3>
+            <p>The official repository provides scripts for pretraining, fine-tuning, and inference.</p>
+          </div>
+          <div class="code-window">
+            <div class="code-top"><span></span><span></span><span></span><button type="button" class="copy-button" data-copy-target="quick-code">Copy</button></div>
+            <pre id="quick-code"><code>git clone https://github.com/lanl/MORPH.git
+cd MORPH
+conda env create -f environment.yml
+conda activate pytorch_py38_env
+python scripts/infer_MORPH.py -h</code></pre>
+          </div>
+        </div>
+
+        <div class="citation reveal" id="citation">
+          <div class="citation-heading"><div><span class="section-kicker">Citation</span><h3>Cite MORPH</h3></div><button type="button" class="copy-button light-button" data-copy-target="bibtex">Copy BibTeX</button></div>
+          <pre id="bibtex"><code>@article{rautela2025morph,
+  title   = {MORPH: PDE Foundation Models with Arbitrary Data Modality},
+  author  = {Rautela, Mahindra Singh and Most, Alexander and Mansingh, Siddharth and Love, Bradley C and Scheinker, Alexander and Oyen, Diane and Debardeleben, Nathan and Lawrence, Earl and Biswas, Ayan},
+  journal = {arXiv preprint arXiv:2509.21670},
+  year    = {2025}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div><a class="brand footer-brand" href="#top"><span class="brand-mark">M</span><span>MORPH</span></a><p>Modality-agnostic foundation models for spatiotemporal physics.</p></div>
+      <div class="footer-links"><a href="https://arxiv.org/abs/2509.21670" target="_blank" rel="noreferrer">Paper</a><a href="https://github.com/lanl/MORPH" target="_blank" rel="noreferrer">Code</a><a href="#citation">Citation</a></div>
+    </div>
+    <div class="shell footer-note">Research project website. Figures and results are drawn from the MORPH paper.</div>
+  </footer>
+
+  <dialog class="image-dialog" aria-label="Expanded research figure">
+    <button class="dialog-close" type="button" aria-label="Close image">×</button>
+    <img src="" alt="Expanded research figure">
+  </dialog>
+</body>
+</html>
