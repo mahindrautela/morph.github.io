@@ -28,15 +28,16 @@
 
     <nav class="page-nav" aria-label="Page sections">
       <div class="container">
-        <a href="#abstract">Abstract</a>
+        <a href="#overview">Overview</a>
         <a href="#architecture">Architecture</a>
-        <a href="#tasks">Tasks</a>
-        <a href="#datasets">Datasets</a>
+        <a href="#tasks">Capabilities &amp; tasks</a>
+        <a href="#datasets">Data universe</a>
         <a href="#citation">Citation</a>
       </div>
     </nav>
 
-    <section class="container section" id="abstract">
+    <section class="container section" id="overview">
+      <h2>Overview</h2>
       <p class="lead">We introduce MORPH, a multimodal foundation model for partial differential equations (PDEs) designed to learn across heterogeneous physics datasets with varying dimensionalities, resolutions, and fields. Its architecture combines component-wise convolutions, field-wise cross-attention, and factorized axial spatiotemporal attention, enabling scalable learning across diverse PDE modalities. We pretrain multiple model variants on a heterogeneous PDE corpus using a next-frame prediction objective and evaluate transfer across a broad set of downstream tasks.</p>
       <p>These include forward modeling tasks such as autoregressive rollouts and terminal key-frame prediction, as well as inverse tasks including composite material property estimation, damage detection in aerospace structures, inertial-confinement-fusion parameter estimation, and sparse sea-surface-temperature reconstruction. Across zero-shot evaluation, full-model fine-tuning, and parameter-efficient low-rank adaptation, pretrained MORPH models consistently outperform models trained from scratch.</p>
       <p>MORPH improves data efficiency in low-data regimes, exhibits favorable model- and data-scaling behavior, and generalizes strongly to out-of-distribution physical systems. Collectively, these capabilities establish MORPH as a flexible backbone for learning from the heterogeneous and multimodal nature of scientific observations, charting a path toward scalable and data-efficient scientific machine learning.</p>
