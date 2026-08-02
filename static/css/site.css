@@ -32,7 +32,7 @@ h3 { margin: 0 0 0.55rem; font-size: 1.1rem; font-weight: 600; }
 p { margin: 0 0 1rem; }
 .authors { margin: 0 auto 0.25rem; max-width: 920px; line-height: 1.8; }
 .affiliation { margin: 0; color: var(--muted); }
-.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem; margin: 1.1rem 0 0; font-size: 1.05rem; }
+.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin: 1.1rem 0 0; font-size: 1.2rem; }
 .page-nav { position: sticky; top: 0; z-index: 10; background: #f9fbfe; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .page-nav > div { display: flex; gap: 1.35rem; overflow-x: auto; padding: 0.7rem 0; white-space: nowrap; font-size: 0.92rem; }
 .section { padding: 4rem 0; }
