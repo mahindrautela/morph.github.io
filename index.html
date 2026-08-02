@@ -30,63 +30,40 @@
       <div class="container">
         <a href="#abstract">Abstract</a>
         <a href="#architecture">Architecture</a>
-        <a href="#results">Results</a>
-        <a href="#models">Models</a>
+        <a href="#tasks">Tasks</a>
         <a href="#datasets">Datasets</a>
         <a href="#citation">Citation</a>
       </div>
     </nav>
 
     <section class="container section" id="abstract">
-      <h2>Abstract</h2>
-      <p class="lead">MORPH is a modality-agnostic foundation model for spatiotemporal physics. A single convolutional vision-transformer backbone processes heterogeneous 1D, 2D, and 3D PDE data with different spatial resolutions and scalar or vector fields.</p>
-      <p>The model converts each mini-batch to a Unified Physics Tensor Format and combines component-wise convolution, field-wise cross-attention, and axial attention. MORPH improves transfer learning across modalities, scales effectively from 7M to 480M parameters, and produces stable autoregressive forecasts.</p>
+      <p class="lead">We introduce MORPH, a multimodal foundation model for partial differential equations (PDEs) designed to learn across heterogeneous physics datasets with varying dimensionalities, resolutions, and fields. Its architecture combines component-wise convolutions, field-wise cross-attention, and factorized axial spatiotemporal attention, enabling scalable learning across diverse PDE modalities. We pretrain multiple model variants on a heterogeneous PDE corpus using a next-frame prediction objective and evaluate transfer across a broad set of downstream tasks.</p>
+      <p>These include forward modeling tasks such as autoregressive rollouts and terminal key-frame prediction, as well as inverse tasks including composite material property estimation, damage detection in aerospace structures, inertial-confinement-fusion parameter estimation, and sparse sea-surface-temperature reconstruction. Across zero-shot evaluation, full-model fine-tuning, and parameter-efficient low-rank adaptation, pretrained MORPH models consistently outperform models trained from scratch.</p>
+      <p>MORPH improves data efficiency in low-data regimes, exhibits favorable model- and data-scaling behavior, and generalizes strongly to out-of-distribution physical systems. Collectively, these capabilities establish MORPH as a flexible backbone for learning from the heterogeneous and multimodal nature of scientific observations, charting a path toward scalable and data-efficient scientific machine learning.</p>
     </section>
 
     <section class="container section" id="architecture">
       <h2>Architecture</h2>
       <p>MORPH maps heterogeneous observations to a common representation, reasons over spatial and temporal structure, and decodes the next physical state.</p>
-      <div class="flow" aria-label="MORPH architecture flow">
-        <div><span>1</span><strong>Unified Physics Tensor Format</strong><p>Represent time, fields, components, and spatial axes consistently.</p></div>
-        <div><span>2</span><strong>Component-wise convolution</strong><p>Extract local structure from every physical component.</p></div>
-        <div><span>3</span><strong>Field-wise cross-attention</strong><p>Exchange information between related physical fields.</p></div>
-        <div><span>4</span><strong>4D axial attention</strong><p>Reason along time, depth, height, and width independently.</p></div>
-        <div><span>5</span><strong>Autoregressive decoder</strong><p>Predict the next state and roll forward in time.</p></div>
-      </div>
-      <div class="formula">
-        <strong>Unified Physics Tensor Format</strong>
-        <p>X ∈ ℝ<sup>B×T×F×C×D×H×W</sup></p>
-        <small>Batch · Time · Fields · Components · Depth · Height · Width</small>
-      </div>
+      <figure class="architecture-figure">
+        <img src="morph_main.png" alt="MORPH architecture diagram showing heterogeneous 1D, 2D, and 3D data unified into a common tensor format, processed by convolution and axial-attention modules, then decoded autoregressively.">
+      </figure>
     </section>
 
-    <section class="section muted-section" id="results">
+    <section class="section muted-section" id="tasks">
       <div class="container">
-        <h2>Results</h2>
-        <p>MORPH is evaluated on zero-shot transfer, fine-tuning, data efficiency, and autoregressive prediction.</p>
-        <div class="result-grid">
-          <article><h3>Cross-modality transfer</h3><p>A model pretrained on 2D incompressible Navier–Stokes transfers positively to every evaluated 1D, 2D, and 3D fluid target.</p><p class="result-value">GCR &gt; 0</p></article>
+        <h2>Capabilities &amp; downstream tasks</h2>
+        <p>MORPH supports efficient autoregressive forecasting and adapts to forward and inverse scientific learning tasks.</p>
+        <div class="capability-grid">
           <article><h3>Data efficiency</h3><p>Pretraining lets MORPH outperform standalone models with substantially fewer task-specific trajectories.</p><p class="result-value">&lt;1%</p><p class="caption">FNS-KF data can exceed the standalone reference.</p></article>
-          <article><h3>Autoregressive prediction</h3><p>MORPH produces stable multi-step forecasts from an initial state on representative shallow-water and forced Navier–Stokes systems.</p><p class="result-value">10 steps</p></article>
+          <article><h3>Autoregressive prediction</h3><p>MORPH produces stable multi-step forecasts from an initial state on representative shallow-water and forced Navier–Stokes systems.</p></article>
+          <article><h3>Terminal key-frame prediction</h3><p>Predict a system’s terminal state directly from its initial conditions.</p><p class="task-type">Forward modeling</p></article>
+          <article><h3>Composite material property estimation</h3><p>Infer material properties from observed physical responses.</p><p class="task-type">Inverse modeling</p></article>
+          <article><h3>Aerospace structural damage detection</h3><p>Identify damage in aerospace structures from their measured behavior.</p><p class="task-type">Inverse modeling</p></article>
+          <article><h3>Inertial-confinement-fusion parameter estimation</h3><p>Estimate physical parameters governing inertial-confinement-fusion systems.</p><p class="task-type">Inverse modeling</p></article>
+          <article><h3>Sparse sea-surface-temperature reconstruction</h3><p>Reconstruct complete sea-surface-temperature fields from sparse observations.</p><p class="task-type">Inverse modeling</p></article>
         </div>
       </div>
-    </section>
-
-    <section class="container section" id="models">
-      <h2>Model family</h2>
-      <p>All MORPH variants use the same core architecture.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Variant</th><th>Parameters</th><th>Embedding</th><th>Heads</th><th>Depth</th></tr></thead>
-          <tbody>
-            <tr><td>MORPH-Ti</td><td>7M</td><td>256</td><td>4</td><td>4</td></tr>
-            <tr><td>MORPH-S</td><td>30M</td><td>512</td><td>8</td><td>4</td></tr>
-            <tr><td>MORPH-M</td><td>126M</td><td>768</td><td>12</td><td>8</td></tr>
-            <tr><td>MORPH-L</td><td>480M</td><td>1024</td><td>16</td><td>16</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">LoRA provides parameter-efficient adaptation while retaining most full fine-tuning gains.</p>
     </section>
 
     <section class="section muted-section" id="datasets">
